@@ -1,0 +1,8 @@
+1. Download and unzip this (http://firstforge.wpi.edu/sf/frs/do/viewRelease/projects.wpilib/frs.2012_java_update_for_frc.2012_frc_update_netbeans_modules)
+2. on the Netbeans welcome page click install plugins -> downloaded ->Add Plugins...
+3. navigate to your extracted location and select all the avaliable files inside the netbeansModules folder
+4. click install near the bottom left
+5.  next -> accept ->update
+6. a security popup about the plugins not being signed will popup, click continue
+7. Restart when the finish page shows up
+8. Done! You can now begin programming in Java for FRC =)
