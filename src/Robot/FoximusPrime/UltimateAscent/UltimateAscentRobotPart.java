@@ -9,8 +9,14 @@ package Robot.FoximusPrime.UltimateAscent;
  * @author edward
  */
 public abstract class UltimateAscentRobotPart {
+    
     protected UltimateAscentRobot robot;
+    
     UltimateAscentRobotPart(UltimateAscentRobot robot){
         this.robot = robot;
     }
+    
+    public void updateTeleop(){};
+    public void updateAutonomous(){};
+    public boolean runTest(){return true;};
 }
