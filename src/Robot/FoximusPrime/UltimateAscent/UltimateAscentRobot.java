@@ -9,6 +9,13 @@ package Robot.FoximusPrime.UltimateAscent;
 
 
 
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Climber;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.DashboardComm;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Drive;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.ImageProcesser;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Pickup;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Sensors;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Thrower;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -45,6 +52,7 @@ public class UltimateAscentRobot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        while(this.isAutonomous() && this.isEnabled()){
         climber.updateAutonomous();
         dashboardComm.updateAutonomous();
         drive.updateAutonomous();
@@ -52,6 +60,7 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup.updateAutonomous();
         sensors.updateAutonomous();
         thrower.updateAutonomous();
+        }
     }
 
     /**
