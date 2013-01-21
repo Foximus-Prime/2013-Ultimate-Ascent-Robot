@@ -55,7 +55,27 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         bar = null;
     }
     
-    public void findFieldFeatures(){        
+    public int getHighOffCenter(){
+        findFieldFeatures();
+        if(highGoal == null)
+            return 0;
+        return (highGoal.boundingRectLeft+(highGoal.boundingRectWidth/2)) - (highGoal.imageWidth/2);
+    }
+    public int getLeftMidOffCenter(){
+        findFieldFeatures();
+        if(leftMiddleGoal == null)
+            return 0;
+        return (leftMiddleGoal.boundingRectLeft+(leftMiddleGoal.boundingRectWidth/2)) - (leftMiddleGoal.imageWidth/2);
+    }
+    public int getRightMidOffCenter(){
+        findFieldFeatures();
+        if(rightMiddleGoal == null)
+            return 0;
+        return (rightMiddleGoal.boundingRectLeft+(rightMiddleGoal.boundingRectWidth/2)) - (rightMiddleGoal.imageWidth/2);
+    }
+            
+    
+    private void findFieldFeatures(){        
         try {
             highGoal = null;
             leftMiddleGoal = null;
@@ -96,6 +116,32 @@ public class ImageProcesser extends UltimateAscentRobotPart {
                 else if(isCandidate(blobs[i], BARRATIO, ERRORACCEPT)) {
                     barCandidates.addElement(blobs[i]);
                 }
+            }
+            
+            sortReports(highCandidates, HIGHGOALRATIO);
+            sortReports(lowCandidates, LOWGOALRATIO);
+            sortReports(middleCandidates, MIDDLEGOALRATIO);
+            sortReports(separatorCandidates, SEPARATORRATIO);
+            sortReports(postCandidates, POSTRATIO);
+            sortReports(barCandidates, BARRATIO);               
+            
+            if(highCandidates.size() > 0){
+                highGoal=(ParticleAnalysisReport)highCandidates.elementAt(0);
+            }
+            if(middleCandidates.size() >= 2){
+                ParticleAnalysisReport tmp = (ParticleAnalysisReport) middleCandidates.elementAt(0);
+                if(tmp.boundingRectLeft < highGoal.boundingRectLeft){
+                    leftMiddleGoal=tmp;
+                    rightMiddleGoal=(ParticleAnalysisReport) middleCandidates.elementAt(1);
+                }
+                else{
+                    rightMiddleGoal=tmp;
+                    leftMiddleGoal=(ParticleAnalysisReport) middleCandidates.elementAt(1);                    
+                }
+            }
+            if(middleCandidates.size() == 1){
+                leftMiddleGoal =(ParticleAnalysisReport) middleCandidates.elementAt(0);
+                rightMiddleGoal=(ParticleAnalysisReport) middleCandidates.elementAt(0);
             }
                         
         } catch (AxisCameraException ex) {
