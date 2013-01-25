@@ -17,16 +17,17 @@ public class Sensors extends UltimateAscentRobotPart{
     private Joystick leftStick;
     private Joystick rightStick;
     
-    private Encoder  throwerEncoder;
+    private Encoder  frontEncoder;
+    private Encoder  backEncoder;
     private Gyro     gyro;
     
     public Sensors(UltimateAscentRobot robot){
         super(robot);
         leftStick      = new Joystick(1);
         rightStick     = new Joystick(2);
-        throwerEncoder = new Encoder(1,2); //digital sources 1 and 2
+        frontEncoder = new Encoder(1,2);   //digital sources 1 and 2
         gyro           = new Gyro(1);      //analog channel 1
-        gyro.setSensitivity(.007);
+        //gyro.setSensitivity(.007);
         gyro.reset();
     }
     public void updateTeleop(){
@@ -40,8 +41,8 @@ public class Sensors extends UltimateAscentRobotPart{
     public Joystick getRightJoystick(){
         return rightStick;
     }
-    public Encoder getThrowerEncoder(){
-        return throwerEncoder;
+    public Encoder getFrontEncoder(){
+        return frontEncoder;
     }
     public Gyro getGyro(){
         return gyro;
