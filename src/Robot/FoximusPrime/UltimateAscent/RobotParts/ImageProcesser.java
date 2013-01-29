@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  * @author edward
@@ -56,26 +57,23 @@ public class ImageProcesser extends UltimateAscentRobotPart {
     }
     
     public int getHighOffCenter(){
-        findFieldFeatures();
         if(highGoal == null)
             return 0;
         return (highGoal.boundingRectLeft+(highGoal.boundingRectWidth/2)) - (highGoal.imageWidth/2);
     }
     public int getLeftMidOffCenter(){
-        findFieldFeatures();
         if(leftMiddleGoal == null)
             return 0;
         return (leftMiddleGoal.boundingRectLeft+(leftMiddleGoal.boundingRectWidth/2)) - (leftMiddleGoal.imageWidth/2);
     }
     public int getRightMidOffCenter(){
-        findFieldFeatures();
         if(rightMiddleGoal == null)
             return 0;
         return (rightMiddleGoal.boundingRectLeft+(rightMiddleGoal.boundingRectWidth/2)) - (rightMiddleGoal.imageWidth/2);
     }
             
     
-    private void findFieldFeatures(){        
+    public void findFieldFeatures(){        
         try {
             highGoal = null;
             leftMiddleGoal = null;
@@ -146,6 +144,14 @@ public class ImageProcesser extends UltimateAscentRobotPart {
                         
         } catch (AxisCameraException ex) {
         } catch (NIVisionException ex) { }
+        
+        SmartDashboard.putBoolean("High", highGoal!=null);
+        SmartDashboard.putNumber("HighOff", this.getHighOffCenter());
+        SmartDashboard.putBoolean("LeftMid", leftMiddleGoal!=null);
+        SmartDashboard.putNumber("LeftOff", this.getLeftMidOffCenter());
+        SmartDashboard.putBoolean("RightMid", rightMiddleGoal!=null);
+        SmartDashboard.putNumber("RightOff", this.getRightMidOffCenter());
+        SmartDashboard.putBoolean("Low", lowGoal!=null);
     }
     
     private boolean isCandidate(ParticleAnalysisReport blob, double ratio, double error){
