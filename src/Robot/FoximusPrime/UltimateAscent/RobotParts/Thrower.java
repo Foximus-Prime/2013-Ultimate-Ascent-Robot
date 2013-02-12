@@ -5,7 +5,7 @@
 package Robot.FoximusPrime.UltimateAscent.RobotParts;
 
 import Robot.FoximusPrime.UltimateAscent.UltimateAscentRobot;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Jaguar;
 
 /**
  *
@@ -13,32 +13,33 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class Thrower extends UltimateAscentRobotPart{
     
-    private Victor frontWheel;
-    private Victor backWheel;
+    private Jaguar wheel;
     private double rate;
     private double pk = .05;
     
     public Thrower(UltimateAscentRobot robot){
         super(robot);
-        frontWheel = new Victor(3);
-        backWheel  = new Victor(4);
+        wheel = new Jaguar(3);
         rate = 0;
     }
     
     public void updateTeleop(){
-        frontWheel.set(robot.getSensors().getRightJoystick().getY() > 0?robot.getSensors().getRightJoystick().getY():0);
-        backWheel.set(robot.getSensors().getRightJoystick().getY() > 0?robot.getSensors().getRightJoystick().getY():0);
+        
+        if(!robot.getSensors().getRightJoystick().getRawButton(9))
+            wheel.set(robot.getSensors().getRightJoystick().getY() < 0?robot.getSensors().getRightJoystick().getY():0);
         
         if(robot.getSensors().getRightJoystick().getY() == 0){
             controlRate();
         }
         
-        if(robot.getSensors().getRightJoystick().getRawButton(9))
+        if(robot.getSensors().getRightJoystick().getRawButton(2))
             rate = 0;
+        if(robot.getSensors().getRightJoystick().getRawButton(2))
+            rate = robot.getSensors().getRightJoystick().getY();
     }
     
     private void controlRate(){
-        frontWheel.set(frontWheel.getSpeed()+((rate-robot.getSensors().getFrontEncoder().getRate())*pk));
+        wheel.set(wheel.getSpeed()+((rate-robot.getSensors().getFrontEncoder().getRate())*pk));
     }
     
     public void setRate(double nrate){

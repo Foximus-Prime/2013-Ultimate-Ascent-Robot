@@ -17,6 +17,8 @@ import Robot.FoximusPrime.UltimateAscent.RobotParts.Pickup;
 import Robot.FoximusPrime.UltimateAscent.RobotParts.Sensors;
 import Robot.FoximusPrime.UltimateAscent.RobotParts.Thrower;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +41,7 @@ public class UltimateAscentRobot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        getWatchdog().setEnabled(false);
         climber        = new Climber(this);
         dashboardComm  = new DashboardComm(this);
         drive          = new Drive(this);
@@ -67,6 +70,8 @@ public class UltimateAscentRobot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        
+        imageProcesser.getFPS();
         climber.updateTeleop();
         dashboardComm.updateTeleop();
         drive.updateTeleop();
@@ -74,6 +79,8 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup.updateTeleop();
         sensors.updateTeleop();
         thrower.updateTeleop();
+        
+        //imageProcesser.findFieldFeatures();
     }
     
     /**

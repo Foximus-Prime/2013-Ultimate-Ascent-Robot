@@ -13,12 +13,18 @@ import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import java.io.IOException;
 /**
  *
  * @author edward
  */
 public class ImageProcesser extends UltimateAscentRobotPart {
+    
+    
     AxisCamera camera;       
+    
+    NetworkTable driverStation;
     
     ParticleAnalysisReport highGoal;
     ParticleAnalysisReport leftMiddleGoal;
@@ -36,10 +42,21 @@ public class ImageProcesser extends UltimateAscentRobotPart {
     double POSTRATIO = 13.33333333;
     double BARRATIO = 2.66666666;
 
-    double ERRORACCEPT = .05;
+    double ERRORACCEPT = .50;
     
     public ImageProcesser(UltimateAscentRobot robot){
         super(robot);
+        
+        //roboRealm.
+        
+        driverStation = NetworkTable.getTable("SmartDashboard");
+//        try {
+//            NetworkTable.initialize();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+        SmartDashboard.putBoolean("roboRealmTable", driverStation.isConnected());
+        
         camera = AxisCamera.getInstance("10.36.95.11");    
         camera.writeCompression(40);
         camera.writeResolution(AxisCamera.ResolutionT.k320x240);
@@ -54,6 +71,11 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         rightSeparator = null;
         post = null;
         bar = null;
+    }
+    
+    public double getFPS(){        
+        SmartDashboard.putNumber("rrFPS", driverStation.getNumber("MOUSE_X",-2));
+        return 0.0;
     }
     
     public int getHighOffCenter(){
@@ -73,8 +95,7 @@ public class ImageProcesser extends UltimateAscentRobotPart {
     }
             
     
-    public void findFieldFeatures(){        
-        try {
+    public void findFieldFeatures(){  
             highGoal = null;
             leftMiddleGoal = null;
             rightMiddleGoal = null;
@@ -82,10 +103,11 @@ public class ImageProcesser extends UltimateAscentRobotPart {
             leftSeparator = null;
             rightSeparator = null;
             post = null;
-            bar = null;
+            bar = null;      
+        try {
             
             ColorImage img = camera.getImage();
-            BinaryImage thresholdImg = img.thresholdHSV(0, 255, 0, 255, 235, 255);
+            BinaryImage thresholdImg = img.thresholdHSV(0, 255, 0, 255, 215, 255);
             ParticleAnalysisReport[] blobs = thresholdImg.getOrderedParticleAnalysisReports();
             
             SquawkVector highCandidates = new SquawkVector();
