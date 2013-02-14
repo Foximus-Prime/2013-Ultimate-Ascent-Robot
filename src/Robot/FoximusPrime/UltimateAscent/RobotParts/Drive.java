@@ -28,11 +28,18 @@ public class Drive extends UltimateAscentRobotPart {
     }
     
     public void updateTeleop(){
-        drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), -robot.getSensors().getLeftJoystick().getX());
+        if (robot.getSensors().getLeftJoystick().getRawButton(3))
+            adjustAim(robot.getImageProcesser().getOffCenter());
+        else
+            drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), -robot.getSensors().getLeftJoystick().getX());
     }
     
     public void updateAuto(){
         double power = -robot.getSensors().getGyro().getAngle() * KP;
         drive.arcadeDrive(0, power > AUTOMAX?power:AUTOMAX);
+    }
+    public void adjustAim(double offsets){
+    if (offsets >= 3 || offsets <= 3)
+        drive.arcadeDrive(0, offsets * .05);
     }
 }

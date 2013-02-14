@@ -78,10 +78,8 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         return 0.0;
     }
     
-    public int getHighOffCenter(){
-        if(highGoal == null)
-            return 0;
-        return (highGoal.boundingRectLeft+(highGoal.boundingRectWidth/2)) - (highGoal.imageWidth/2);
+    public int getOffCenter(){
+        return 0;
     }
     public int getLeftMidOffCenter(){
         if(leftMiddleGoal == null)
@@ -168,7 +166,7 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         } catch (NIVisionException ex) { }
         
         SmartDashboard.putBoolean("High", highGoal!=null);
-        SmartDashboard.putNumber("HighOff", this.getHighOffCenter());
+        //SmartDashboard.putNumber("HighOff", this.getHighOffCenter());
         SmartDashboard.putBoolean("LeftMid", leftMiddleGoal!=null);
         SmartDashboard.putNumber("LeftOff", this.getLeftMidOffCenter());
         SmartDashboard.putBoolean("RightMid", rightMiddleGoal!=null);
@@ -194,4 +192,5 @@ public class ImageProcesser extends UltimateAscentRobotPart {
             blobs.setElementAt(tmp, best);
         }
     }
-}
+    }
+
