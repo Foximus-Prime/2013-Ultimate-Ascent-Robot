@@ -74,7 +74,7 @@ public class ImageProcesser extends UltimateAscentRobotPart {
     }
     
     public double getFPS(){        
-        SmartDashboard.putNumber("rrFPS", driverStation.getNumber("MOUSE_X",-2));
+        //SmartDashboard.putNumber("rrFPS", driverStation.getNumber("FPS",-1));
         return 0.0;
     }
     

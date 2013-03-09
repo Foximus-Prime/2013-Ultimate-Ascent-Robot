@@ -25,7 +25,7 @@ public class Sensors extends UltimateAscentRobotPart{
         super(robot);
         leftStick      = new Joystick(1);
         rightStick     = new Joystick(2);
-        frontEncoder = new Encoder(1,2);   //digital sources 1 and 2
+        frontEncoder = new Encoder(2,3);   //digital sources 1 and 2
         gyro           = new Gyro(1);      //analog channel 1
         //gyro.setSensitivity(.007);
         gyro.reset();

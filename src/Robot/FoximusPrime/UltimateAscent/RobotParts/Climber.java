@@ -18,7 +18,7 @@ public class Climber extends UltimateAscentRobotPart{
     public Climber(UltimateAscentRobot robot){
         super(robot);
         
-        armMotor = new Jaguar(4);
+        armMotor = new Jaguar(2);
     }
     
     public void updateTeleop(){

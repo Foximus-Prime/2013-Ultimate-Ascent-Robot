@@ -7,7 +7,8 @@ package Robot.FoximusPrime.UltimateAscent.RobotParts;
 import Robot.FoximusPrime.UltimateAscent.UltimateAscentRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.Jaguar;
  */
 public class Thrower extends UltimateAscentRobotPart{
     
-    private Jaguar wheel;
+    private Victor wheel;
     private double rate;
     private double pk = .05;
     private DoubleSolenoid loader;
@@ -23,7 +24,7 @@ public class Thrower extends UltimateAscentRobotPart{
     public Thrower(UltimateAscentRobot robot){
         super(robot);
         loader = new DoubleSolenoid(1,2);
-        wheel = new Jaguar(3);
+        wheel = new Victor(3);
         rate = 0;
     }
     
@@ -45,6 +46,8 @@ public class Thrower extends UltimateAscentRobotPart{
             loader.set(DoubleSolenoid.Value.kReverse);
         else
             loader.set(DoubleSolenoid.Value.kForward);
+        
+        SmartDashboard.putNumber("SPEED",robot.getSensors().getRightJoystick().getY()*10); 
     }
     
     private void controlRate(){

@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------*/
+ /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -16,7 +16,9 @@ import Robot.FoximusPrime.UltimateAscent.RobotParts.ImageProcesser;
 import Robot.FoximusPrime.UltimateAscent.RobotParts.Pickup;
 import Robot.FoximusPrime.UltimateAscent.RobotParts.Sensors;
 import Robot.FoximusPrime.UltimateAscent.RobotParts.Thrower;
+import Robot.FoximusPrime.UltimateAscent.RobotParts.Pnuematics;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,10 +38,14 @@ public class UltimateAscentRobot extends IterativeRobot {
     private Pickup         pickup;
     private Sensors        sensors;   
     private Thrower        thrower;
+    private Pnuematics     pnuematics;
+    
+    //private Compressor     rcompressor;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    
     public void robotInit() {
         getWatchdog().setEnabled(false);
         climber        = new Climber(this);
@@ -49,8 +55,24 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup         = new Pickup(this);
         sensors        = new Sensors(this);
         thrower        = new Thrower(this);
+        pnuematics     = new Pnuematics(this);
+        
+        //rcompressor     = new Compressor(1,1);
+        //rcompressor.start();
     }
 
+    
+    
+        public void teleopInit(){
+            pnuematics.compressorOn();         
+            //rcompressor.start();
+        }
+        
+        public void disableInit(){
+            
+            pnuematics.compressorOff();
+            //rcompressor.stop();
+        }
     /**
      * This function is called periodically during autonomous
      */
@@ -63,9 +85,13 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup.updateAutonomous();
         sensors.updateAutonomous();
         thrower.updateAutonomous();
+        
         }
     }
 
+//    public void teleopInit(){
+//        
+//    }
     /**
      * This function is called periodically during operator control
      */
@@ -79,7 +105,7 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup.updateTeleop();
         sensors.updateTeleop();
         thrower.updateTeleop();
-        
+        pnuematics.updateTeleop();
         //imageProcesser.findFieldFeatures();
     }
     
