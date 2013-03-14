@@ -83,15 +83,15 @@ public class ImageProcesser extends UltimateAscentRobotPart {
     public double getOffCenter(){
         NumberArray rectangles = new NumberArray();
         
-        double tX = driverStation.getNumber("TargetX", -32767);
+        //double tX = driverStation.getNumber("TargetX", -32767);
         
-        return tX-(camera.getResolution().width/2);
+        // return tX-(camera.getResolution().width/2);
         
                
         //eddie typing
         //never gonna give you up, never gonna let you down...
         
-        //return 0;
+        return 0;
     }
     public int getLeftMidOffCenter(){
         if(leftMiddleGoal == null)
