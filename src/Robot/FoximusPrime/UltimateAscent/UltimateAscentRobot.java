@@ -107,6 +107,8 @@ public class UltimateAscentRobot extends IterativeRobot {
         thrower.updateTeleop();
         pnuematics.updateTeleop();
         //imageProcesser.findFieldFeatures();
+        
+        SmartDashboard.putNumber("offCenter", imageProcesser.getOffCenter());
     }
     
     /**

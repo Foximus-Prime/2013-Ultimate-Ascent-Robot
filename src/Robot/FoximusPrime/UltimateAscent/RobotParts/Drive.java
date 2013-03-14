@@ -45,7 +45,7 @@ public class Drive extends UltimateAscentRobotPart {
         if (robot.getSensors().getLeftJoystick().getRawButton(3))
             adjustAim(robot.getImageProcesser().getOffCenter());
         else
-            drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), -robot.getSensors().getLeftJoystick().getX());
+            drive.arcadeDrive(robot.getSensors().getLeftJoystick().getX(), -robot.getSensors().getLeftJoystick().getY());
             //drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), robot.getSensors().getLeftJoystick().getX());
         
 

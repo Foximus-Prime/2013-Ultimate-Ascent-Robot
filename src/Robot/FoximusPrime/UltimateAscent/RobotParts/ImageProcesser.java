@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 import java.io.IOException;
 /**
  *
@@ -58,8 +60,8 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         SmartDashboard.putBoolean("roboRealmTable", driverStation.isConnected());
         
         camera = AxisCamera.getInstance("10.36.95.11");    
-        camera.writeCompression(40);
-        camera.writeResolution(AxisCamera.ResolutionT.k320x240);
+        //camera.writeCompression(40);
+        //camera.writeResolution(AxisCamera.ResolutionT.k320x240);
         camera.writeExposureControl(AxisCamera.ExposureT.automatic);
         camera.writeRotation(AxisCamera.RotationT.k0);
         
@@ -78,8 +80,18 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         return 0.0;
     }
     
-    public int getOffCenter(){
-        return 0;
+    public double getOffCenter(){
+        NumberArray rectangles = new NumberArray();
+        
+        double tX = driverStation.getNumber("TargetX", -32767);
+        
+        return tX-(camera.getResolution().width/2);
+        
+               
+        //eddie typing
+        //never gonna give you up, never gonna let you down...
+        
+        //return 0;
     }
     public int getLeftMidOffCenter(){
         if(leftMiddleGoal == null)
