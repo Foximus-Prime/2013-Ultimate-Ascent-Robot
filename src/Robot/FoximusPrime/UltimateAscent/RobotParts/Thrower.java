@@ -30,8 +30,14 @@ public class Thrower extends UltimateAscentRobotPart{
     
     public void updateTeleop(){
         
-        if(!robot.getSensors().getRightJoystick().getRawButton(2))
+        if(!robot.getSensors().getRightJoystick().getRawButton(2) && Math.abs(robot.getSensors().getRightJoystick().getY()) > .2){
             wheel.set(robot.getSensors().getRightJoystick().getY() < 0?-robot.getSensors().getRightJoystick().getY():0);
+            robot.getPnuematics().compressorOff();
+        }
+        else{
+            robot.getPnuematics().compressorOn();
+            wheel.set(0);
+        }
         
         if(robot.getSensors().getRightJoystick().getY() == 0){
             controlRate();

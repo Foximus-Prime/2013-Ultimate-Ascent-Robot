@@ -68,6 +68,8 @@ public class UltimateAscentRobot extends IterativeRobot {
     
         public void teleopInit(){
             pnuematics.compressorOn();         
+            climber.reactivate();
+            
             //rcompressor.start();
         }
         
@@ -148,5 +150,8 @@ public class UltimateAscentRobot extends IterativeRobot {
     }
     public Thrower getThrower(){
         return thrower;
+    }
+    public Pnuematics getPnuematics(){
+        return pnuematics;
     }
 }

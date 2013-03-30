@@ -49,4 +49,14 @@ public class Climber extends UltimateAscentRobotPart{
     public void reactivate(){
         active = true;
     }
+    public boolean runTest(){
+        
+        if(robot.getSensors().getRightJoystick().getRawButton(2) && Math.abs(robot.getSensors().getRightJoystick().getY())>.2)
+            armMotor.set(-robot.getSensors().getRightJoystick().getY());
+        else
+            armMotor.set(0);
+        
+        return true;
+    }
+    
 }
