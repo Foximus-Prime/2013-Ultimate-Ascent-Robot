@@ -28,11 +28,10 @@ public class Drive extends UltimateAscentRobotPart {
     public Drive(UltimateAscentRobot robot){
         super(robot);
         leftMotor  = new Jaguar(1); //PWM 1
-        rightMotor = new Jaguar(4); //PWM 2
+        rightMotor = new Jaguar(2); //PWM 2
         drive      = new RobotDrive(leftMotor,rightMotor);
         //compressor = new Relay(1);
         //compressor.setDirection(Relay.Direction.kForward);
-        SmartDashboard.putNumber("YAW", kYAW);
     }
     
     public void updateTeleop(){
@@ -41,22 +40,22 @@ public class Drive extends UltimateAscentRobotPart {
         else
             compressor.set(Relay.Value.kOff); */
     
-        kYAW = SmartDashboard.getNumber("YAW");
-        if (robot.getSensors().getLeftJoystick().getRawButton(3))
-            adjustAim(robot.getImageProcesser().getOffCenter());
-        else
-            drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), -robot.getSensors().getLeftJoystick().getX());
+        kYAW = 0;
+        //if (robot.getSensors().getLeftJoystick().getRawButton(3))
+            //adjustAim(robot.getImageProcesser().getOffCenter());
+        //else
+            drive.arcadeDrive(-robot.getSensors().getLeftJoystick().getY(), -robot.getSensors().getLeftJoystick().getX());
             //drive.arcadeDrive(robot.getSensors().getLeftJoystick().getY(), robot.getSensors().getLeftJoystick().getX());
         
+        //SmartDashboard.putNumber("rot", -robot.getSensors().getLeftJoystick().getX());
 
     }
     
     public void updateAuto(){
-        double power = -robot.getSensors().getGyro().getAngle() * KP;
-        drive.arcadeDrive(0, power > AUTOMAX?power:AUTOMAX);
     }
     public void adjustAim(double offsets){
-    if (offsets >= 3 || offsets <= 3)
-        drive.arcadeDrive(0, offsets * .05);
+        double ERRORMARGIN = 7;
+        //if ( Math.abs(offsets) >= ERRORMARGIN)
+        //    drive.arcadeDrive(0, offsets * 0.0003 + (offsets>0?.68:-.68));
     }
 }

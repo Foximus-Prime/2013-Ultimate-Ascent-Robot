@@ -18,7 +18,6 @@ public class DashboardComm extends UltimateAscentRobotPart{
     }
     
     public void updateTeleop(){
-        SmartDashboard.putNumber("Gyro", robot.getSensors().getGyro().getAngle());
     }
     
 }

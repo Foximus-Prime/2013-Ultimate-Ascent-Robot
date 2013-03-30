@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 import java.io.IOException;
 /**
  *
@@ -55,7 +56,6 @@ public class ImageProcesser extends UltimateAscentRobotPart {
 //        } catch (IOException ex) {
 //            ex.printStackTrace();
 //        }
-        SmartDashboard.putBoolean("roboRealmTable", driverStation.isConnected());
         
         camera = AxisCamera.getInstance("10.36.95.11");    
         camera.writeCompression(40);
@@ -78,7 +78,17 @@ public class ImageProcesser extends UltimateAscentRobotPart {
         return 0.0;
     }
     
-    public int getOffCenter(){
+    public double getOffCenter(){
+        /*double ret, width;
+        try{
+            width = SmartDashboard.getNumber("IWIDTH", 0);
+            ret = SmartDashboard.getNumber("TargetX", 264);
+        }
+        catch(TableKeyNotDefinedException ex){
+            ret = 0;
+            width = 0;
+        }
+        */
         return 0;
     }
     public int getLeftMidOffCenter(){

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,6 +41,7 @@ public class UltimateAscentRobot extends IterativeRobot {
     private Thrower        thrower;
     private Pnuematics     pnuematics;
     
+    private DriverStation  driverStation;
     //private Compressor     rcompressor;
     /**
      * This function is run when the robot is first started up and should be
@@ -56,6 +58,7 @@ public class UltimateAscentRobot extends IterativeRobot {
         sensors        = new Sensors(this);
         thrower        = new Thrower(this);
         pnuematics     = new Pnuematics(this);
+        driverStation  = DriverStation.getInstance();
         
         //rcompressor     = new Compressor(1,1);
         //rcompressor.start();
@@ -86,6 +89,7 @@ public class UltimateAscentRobot extends IterativeRobot {
         sensors.updateAutonomous();
         thrower.updateAutonomous();
         
+        drive.adjustAim(-imageProcesser.getOffCenter());
         }
     }
 
@@ -106,7 +110,9 @@ public class UltimateAscentRobot extends IterativeRobot {
         sensors.updateTeleop();
         thrower.updateTeleop();
         pnuematics.updateTeleop();
-        //imageProcesser.findFieldFeatures();
+        
+        SmartDashboard.putNumber("Batt", driverStation.getBatteryVoltage());
+        SmartDashboard.putNumber("OffCenter", imageProcesser.getOffCenter());
     }
     
     /**

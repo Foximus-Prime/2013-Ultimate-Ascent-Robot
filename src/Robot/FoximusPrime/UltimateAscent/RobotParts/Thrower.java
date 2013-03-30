@@ -24,30 +24,26 @@ public class Thrower extends UltimateAscentRobotPart{
     public Thrower(UltimateAscentRobot robot){
         super(robot);
         loader = new DoubleSolenoid(1,2);
-        wheel = new Victor(3);
+        wheel = new Victor(4);
         rate = 0;
     }
     
     public void updateTeleop(){
         
-        if(!robot.getSensors().getRightJoystick().getRawButton(9))
+        if(!robot.getSensors().getRightJoystick().getRawButton(2))
             wheel.set(robot.getSensors().getRightJoystick().getY() < 0?-robot.getSensors().getRightJoystick().getY():0);
         
         if(robot.getSensors().getRightJoystick().getY() == 0){
             controlRate();
         }
         
-        if(robot.getSensors().getRightJoystick().getRawButton(2))
-            rate = 0;
-        if(robot.getSensors().getRightJoystick().getRawButton(2))
-            rate = robot.getSensors().getRightJoystick().getY();
         
-        if(robot.getSensors().getRightJoystick().getTrigger())
+        if(!robot.getSensors().getRightJoystick().getRawButton(2) &&  robot.getSensors().getRightJoystick().getTrigger())
             loader.set(DoubleSolenoid.Value.kReverse);
         else
             loader.set(DoubleSolenoid.Value.kForward);
         
-        SmartDashboard.putNumber("SPEED",robot.getSensors().getRightJoystick().getY()*10); 
+        SmartDashboard.putNumber("SPEED", Math.abs(wheel.getSpeed())); 
     }
     
     private void controlRate(){
