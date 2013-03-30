@@ -49,7 +49,8 @@ public class UltimateAscentRobot extends IterativeRobot {
      */
     
     public void robotInit() {
-        getWatchdog().setEnabled(false);
+        getWatchdog().setEnabled(true);
+        getWatchdog().setExpiration(2);
         climber        = new Climber(this);
         dashboardComm  = new DashboardComm(this);
         drive          = new Drive(this);
@@ -78,6 +79,12 @@ public class UltimateAscentRobot extends IterativeRobot {
             pnuematics.compressorOff();
             //rcompressor.stop();
         }
+
+    public void disabledPeriodic() {
+        super.disabledPeriodic();
+        
+        SmartDashboard.putBoolean("Watchdog", getWatchdog().isAlive());
+    }
     /**
      * This function is called periodically during autonomous
      */
@@ -113,8 +120,10 @@ public class UltimateAscentRobot extends IterativeRobot {
         thrower.updateTeleop();
         pnuematics.updateTeleop();
         
+        getWatchdog().feed();
         SmartDashboard.putNumber("Batt", driverStation.getBatteryVoltage());
         SmartDashboard.putNumber("OffCenter", imageProcesser.getOffCenter());
+        SmartDashboard.putBoolean("Watchdog", getWatchdog().isAlive());
     }
     
     /**
@@ -128,6 +137,7 @@ public class UltimateAscentRobot extends IterativeRobot {
         pickup.runTest();
         sensors.runTest();
         thrower.runTest();
+        SmartDashboard.putBoolean("Watchdog", getWatchdog().isAlive());
     }
     
     public Climber getClimber(){

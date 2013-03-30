@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -26,6 +27,32 @@ public class Thrower extends UltimateAscentRobotPart{
         loader = new DoubleSolenoid(1,2);
         wheel = new Victor(4);
         rate = 0;
+    }
+    public void updateAutonomous(){
+        Timer tim = new Timer();
+        tim.reset();
+        tim.start();
+        double t1 = tim.get()+2;
+        double t2 = t1+4;
+        wheel.set(1);
+        while(robot.isAutonomous() && robot.isEnabled()){
+            if(tim.get() > t2){
+                t1 += 4;
+                t2 += 4;
+            }
+            else if(tim.get()>t1){
+                loader.set(DoubleSolenoid.Value.kReverse);
+            }            
+            else{
+                loader.set(DoubleSolenoid.Value.kForward);                
+            }
+            
+            robot.getWatchdog().feed();
+            
+            SmartDashboard.putBoolean("Watchdog", robot.getWatchdog().isAlive());
+        }
+        wheel.set(0);
+        loader.set(DoubleSolenoid.Value.kForward);
     }
     
     public void updateTeleop(){
