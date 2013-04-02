@@ -32,17 +32,18 @@ public class Thrower extends UltimateAscentRobotPart{
         Timer tim = new Timer();
         tim.reset();
         tim.start();
-        double t1 = tim.get()+2;
-        double t2 = t1+4;
+        double t1 = tim.get()+1.5;
+        double t2 = t1+1.5;
         wheel.set(1);
         while(robot.isAutonomous() && robot.isEnabled()){
-            if(tim.get() > t2){
-                t1 += 4;
-                t2 += 4;
-            }
-            else if(tim.get()>t1){
+            if(tim.get()>t1 && tim.get() < t2){
                 loader.set(DoubleSolenoid.Value.kReverse);
-            }            
+            }                
+            else if(tim.get() > t2){
+                t1 = tim.get()+1.5;
+                t2 = t1 + 1.5;                
+                loader.set(DoubleSolenoid.Value.kForward);    
+            }      
             else{
                 loader.set(DoubleSolenoid.Value.kForward);                
             }
@@ -57,7 +58,7 @@ public class Thrower extends UltimateAscentRobotPart{
     
     public void updateTeleop(){
         
-        if(!robot.getSensors().getRightJoystick().getRawButton(2) && Math.abs(robot.getSensors().getRightJoystick().getY()) > .2){
+        if(!robot.getSensors().getRightJoystick().getRawButton(2) && Math.abs(robot.getSensors().getRightJoystick().getY()) > .15){
             wheel.set(robot.getSensors().getRightJoystick().getY() < 0?-robot.getSensors().getRightJoystick().getY():0);
             robot.getPnuematics().compressorOff();
         }
@@ -76,7 +77,7 @@ public class Thrower extends UltimateAscentRobotPart{
         else
             loader.set(DoubleSolenoid.Value.kForward);
         
-        SmartDashboard.putNumber("SPEED", Math.abs(wheel.getSpeed())); 
+        SmartDashboard.putNumber("SPEED", 100*Math.abs(wheel.getSpeed())); 
     }
     
     private void controlRate(){

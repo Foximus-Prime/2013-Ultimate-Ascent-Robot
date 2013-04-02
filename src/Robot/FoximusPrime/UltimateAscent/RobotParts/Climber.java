@@ -44,7 +44,7 @@ public class Climber extends UltimateAscentRobotPart{
         if(robot.getSensors().getArmLimit().get())
             active=false;
         
-        SmartDashboard.putBoolean("ArmsActive", robot.getSensors().getArmLimit().get());
+        SmartDashboard.putBoolean("ArmsActive", active);
     }
     public void reactivate(){
         active = true;
